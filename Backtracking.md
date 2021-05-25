@@ -70,3 +70,41 @@ class Solution {
 }
 ```
 
+## *491. Increasing Subsequences*
+Input: nums = [4,6,7,7]
+Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+
+```
+class Solution {
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        //boolean[] used = new boolean[nums.length];
+        helpfn(nums, res, 0, new ArrayList<Integer>());
+        return res;
+    }
+    
+    private void helpfn(int[] nums,List<List<Integer>> res, int posi, List<Integer> rec){
+        //add
+        if(rec.size() >= 2){
+            res.add(new ArrayList<>(rec));
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        //backtracking
+        for(int i = posi; i < nums.length; i++){
+            if(posi > 0 && nums[i] < nums[posi - 1]){
+                continue;
+            }
+            if(set.contains(nums[i])){
+                continue;
+            }
+            rec.add(nums[i]);
+            set.add(nums[i]);
+            //used[i] = true;
+            helpfn(nums,res,i + 1,rec);
+            rec.remove(rec.size() - 1);
+            //set.remove(nums[i]); 本层不需要remove，下一层新建set
+
+        }
+    }
+}
+```
