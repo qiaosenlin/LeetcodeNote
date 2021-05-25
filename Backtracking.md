@@ -108,3 +108,86 @@ class Solution {
     }
 }
 ```
+
+## *47. Permutations II*
+Input: nums = [1,1,2]
+Output:
+[[1,1,2],
+ [1,2,1],
+ [2,1,1]]
+ 
+ Method1: order
+ 
+ ```
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        int[] used = new int[nums.length];
+        helpfn(nums,res,new ArrayList<Integer>(),used);
+        return res;
+    }
+    
+    private void helpfn(int[] nums, List<List<Integer>> res, List<Integer> rec,int[] used){
+        if(rec.size() == nums.length){
+            res.add(new ArrayList<>(rec));
+            return;
+        }
+        for(int i = 0; i < nums.length; i++){
+            if(used[i] == 1){
+                continue;
+            }
+            if(i > 0 && nums[i] == nums[i - 1] && used[i-1] == 0){
+                continue;
+            }
+            rec.add(nums[i]);
+            used[i] = 1;
+            helpfn(nums,res,rec,used);
+            used[i] = 0;
+            rec.remove(rec.size() -1 );
+        }
+        
+    }
+}
+```
+
+Method2: without sort
+```
+ class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        //Arrays.sort(nums);
+        List<List<Integer>> res = new ArrayList<>();
+        int[] used = new int[nums.length];
+        helpfn(nums,res,new ArrayList<Integer>(),used);
+        return res;
+    }
+    
+    private void helpfn(int[] nums, List<List<Integer>> res, List<Integer> rec,int[] used){
+        if(rec.size() == nums.length){
+            res.add(new ArrayList<>(rec));
+            return;
+        }
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0; i < nums.length; i++){
+            if(used[i] == 1){
+                continue;
+            }
+            /*if(i > 0 && nums[i] == nums[i - 1] && used[i-1] == 0){
+                continue;
+            }
+            */
+            if(set.contains(nums[i])){
+                continue;
+            }
+            rec.add(nums[i]);
+            set.add(nums[i]);
+            used[i] = 1;
+            helpfn(nums,res,rec,used);
+            used[i] = 0;
+            rec.remove(rec.size() -1 );
+        }
+        
+    }
+}
+```
+ 
