@@ -173,23 +173,31 @@ class Solution {
 
 ```
 
-## *55. Jump Game*
+## *1005. Maximize Sum Of Array After K Negations*
+Input: nums = [4,2,3], k = 1
+Output: 5
+Explanation: Choose indices (1,) and nums becomes [4,-2,3].
 ```
 class Solution {
-    public boolean canJump(int[] nums) {
-        if(nums.length == 1){
-            return true;
+    public int largestSumAfterKNegations(int[] A, int K) {
+        if (A.length == 1) return A[0];
+        Arrays.sort(A);
+        int sum = 0;
+        int idx = 0;
+        for (int i = 0; i < K; i++) {
+            if (i < A.length - 1 && A[idx] < 0) {
+                A[idx] = -A[idx];
+                if (A[idx] >= Math.abs(A[idx + 1])) idx++;
+                continue;
+            }
+            A[idx] = -A[idx];
         }
-        int reach = 0;
-        for(int i = 0; i <= reach; i++){
-          
-            reach = Math.max(i + nums[i],reach);
-       
-            
-            if(reach >= nums.length - 1) return true;
+
+        for (int i = 0; i < A.length; i++) {
+            sum += A[i];
         }
-        return false;
-        
+        return sum;
     }
 }
+
 ```
