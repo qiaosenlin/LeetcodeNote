@@ -122,3 +122,74 @@ public:
 };
 
 ```
+
+## *55. Jump Game*
+```
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1){
+            return true;
+        }
+        int reach = 0;
+        for(int i = 0; i <= reach; i++){
+          
+            reach = Math.max(i + nums[i],reach);
+       
+            
+            if(reach >= nums.length - 1) return true;
+        }
+        return false;
+        
+    }
+}
+```
+
+## *45. Jump Game II*
+```
+class Solution {
+    public int jump(int[] nums) {
+        if (nums == null || nums.length == 0 || nums.length == 1) {
+            return 0;
+        }
+       
+        int count=0;
+        int curDistance = 0;
+        int maxDistance = 0;
+        for (int i = 0; i < nums.length; i++) {
+            //update
+            maxDistance = Math.max(maxDistance,i+nums[i]);
+            if (maxDistance>=nums.length-1){
+                count++;
+                break;
+            }
+            if (i==curDistance){
+                curDistance = maxDistance;
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+```
+
+## *55. Jump Game*
+```
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 1){
+            return true;
+        }
+        int reach = 0;
+        for(int i = 0; i <= reach; i++){
+          
+            reach = Math.max(i + nums[i],reach);
+       
+            
+            if(reach >= nums.length - 1) return true;
+        }
+        return false;
+        
+    }
+}
+```
