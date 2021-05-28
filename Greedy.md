@@ -201,3 +201,57 @@ class Solution {
 }
 
 ```
+
+## *134. Gas Station*
+```
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        //int curr = 0;
+        for(int i = 0; i < gas.length; i++){
+            if(gas[i] >= cost[i]){
+                if(yes(gas, cost,i)) return i;
+            }
+        }
+        return -1;
+        
+    }
+    
+    private boolean yes(int[] gas, int[] cost, int curr){
+        int tank = 0;
+        for(int i = curr; i < curr+gas.length; i++){
+            int index = i >= gas.length ? i - gas.length : i;
+            
+            tank += gas[index];
+            if(tank < cost[index]){
+                return false;
+            }
+            tank -= cost[index];
+        }
+        return true;
+    }
+}
+```
+
+
+```
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int curSum = 0;
+        int totalSum = 0;
+        int start = 0;
+        for (int i = 0; i < gas.length; i++) {
+            curSum += gas[i] - cost[i];
+            totalSum += gas[i] - cost[i];
+            if (curSum < 0) {   // 
+                start = i + 1;  // update start posi
+                curSum = 0;    
+            }
+        }
+        if (totalSum < 0) return -1; //impossible to run
+        return start;
+    }
+}
+
+```
+
+
