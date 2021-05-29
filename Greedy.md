@@ -254,4 +254,60 @@ class Solution {
 
 ```
 
+## *135. Candy*
+```
+class Solution {
+    public int candy(int[] ratings) {
+        int[] candy = new int[ratings.length];
+        for(int i = 0; i < candy.length; i++){
+            candy[i] = 1;
+        }
+        //first greedy
+        for(int i = 0; i < ratings.length - 1; i++){
+            if(ratings[i] < ratings[i + 1]){
+                candy[i+1] = candy[i] + 1;
+            }
+        }
+        
+        //second greedy
+        for(int i = ratings.length - 1; i > 0; i--){
+            if(ratings[i] < ratings[i - 1]){
+                candy[i - 1] = Math.max(candy[i] + 1,candy[i - 1]);
+            }
+        }
+        int res = 0;
+        for(int i = 0; i < candy.length;i++){
+            res+= candy[i];
+        }
+        return res;
+    }
+}
+```
+
+
+## *135. Candy*
+```
+
+```
+
+
+## *135. Candy*
+```
+
+```
+
+
+## *135. Candy*
+```
+
+```
+
+
+## *135. Candy*
+```
+
+```
+
+
+
 
