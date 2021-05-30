@@ -381,8 +381,76 @@ class Solution {
 ```
 
 
-## *135. Candy*
+## *763. Partition Labels*
+method1: set
 ```
+class Solution {
+    Set<Character> set = new HashSet<>();
+    public List<Integer> partitionLabels(String s) {
+        List<Integer> res = new ArrayList<>();
+        int curr = -1;
+        int end = 0;
+        for(int i = 0; i < s.length(); i++){
+            //cutting
+            if(set.contains(s.charAt(i))){
+                continue;
+            }
+            if(i > end){
+                res.add(i-curr-1);
+                curr = i - 1;
+                end = i;
+            }
+            
+            int tmp = check(i,s.charAt(i), s);
+            
+            System.out.println(s.charAt(i));
+            System.out.println(tmp);
+            if(tmp == -1){
+                continue;
+            } else if(tmp > end){
+                end = tmp;
+            }
+            
+            
+        }
+        res.add(s.length() - 1-curr);
+        return res;
+    }
+    
+    private int check (int index, char o, String s){
+        set.add(o);
+        for(int i = s.length() - 1; i > index; i--){
+            if(s.charAt(i) == (o)){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+
+Method 2: greedy
+```
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        int[] last = new int[26];
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            last[s.charAt(i) - 'a'] = i;
+        }
+        List<Integer> partition = new ArrayList<Integer>();
+        int start = 0, end = 0;
+        for (int i = 0; i < length; i++) {
+            end = Math.max(end, last[s.charAt(i) - 'a']);
+            if (i == end) {
+                partition.add(end - start + 1);
+                start = end + 1;
+            }
+        }
+        return partition;
+    }
+}
 
 ```
 
