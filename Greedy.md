@@ -313,14 +313,70 @@ class Solution {
 ```
 
 
-## *135. Candy*
+## *452. Minimum Number of Arrows to Burst Balloons*
 ```
-
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] != o2[0]) {
+                    return Integer.compare(o1[0],o2[0]);
+                } else {
+                    return Integer.compare(o1[1],o2[1]);
+                }
+            }
+        });
+        int count = 1;
+        //int start = points[0][0];
+        //int end = points[0][1];
+        int hit = points[0][1];
+        for(int i = 1; i < points.length; i++){
+            if(hit < points[i][0]){
+                count++;
+                hit = points[i][1];
+            }
+            else if(hit > points[i][1]){
+                hit = points[i][1];
+            }
+        }
+        return count;
+    }
+}
 ```
+Time: O(nlogn) (quick sort)
 
-
-## *135. Candy*
+## *435. Non-overlapping Intervals*
 ```
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[0] != o2[0]) {
+                    return Integer.compare(o1[0],o2[0]);
+                } else {
+                    return Integer.compare(o1[1],o2[1]);
+                }
+            }
+        });
+        int count = 0;
+        //int start = intervals[0][0];
+        int end = intervals[0][1];
+        for(int i = 1; i < intervals.length; i++){
+            if(end > intervals[i][0]){
+                count++;
+                end = Math.min(end, intervals[i][1]);
+            } else {
+                //start = intervals[i][0];
+                end = intervals[i][1];
+            }
+        }
+        return count;
+            
+        
+    }
+}
 
 ```
 
