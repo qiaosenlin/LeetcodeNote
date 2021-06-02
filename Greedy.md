@@ -454,35 +454,59 @@ class Solution {
 
 ```
 
-## *56. Merge Intervals*
+## *738. Monotone Increasing Digits*
 ```
 class Solution {
-    public int[][] merge(int[][] intervals) {
-        List<int[]> res = new LinkedList<>();
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                if (o1[0] != o2[0]) {
-                    return Integer.compare(o1[0],o2[0]);
-                } else {
-                    return Integer.compare(o1[1],o2[1]);
-                }
+    public int monotoneIncreasingDigits(int N) {
+        char[] arr = (N + "").toCharArray();
+        int max = -1, idx = -1;
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (max < arr[i]) {
+                max = arr[i];
+                idx = i;
             }
-        });
-
-        int start = intervals[0][0];
-        for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] > intervals[i - 1][1]) {
-                res.add(new int[]{start, intervals[i - 1][1]});
-                start = intervals[i][0];
-            } else {
-                intervals[i][1] = Math.max(intervals[i][1], intervals[i - 1][1]);
+            if (arr[i] > arr[i + 1]) {
+                arr[idx] -= 1;
+                for(int j = idx + 1;j < arr.length;j++) {
+                    arr[j] = '9';
+                }
+                break;
             }
         }
-        res.add(new int[]{start, intervals[intervals.length - 1][1]});
-        return res.toArray(new int[res.size()][]);
+        return Integer.parseInt(new String(arr));
+    }
+}
+
+
+
+```
+
+## *968. Binary Tree Cameras*
+```
+class Solution {
+    private int count = 0;
+    public int minCameraCover(TreeNode root) {
+        if (trval(root) == 0) count++;
+        return count;
+    }
+
+    private int trval(TreeNode root) {
+        if (root == null) return -1;
+
+        int left = trval(root.left);
+        int right = trval(root.right);
+
+        if (left == 0 || right == 0) {
+            count++;
+            return 2;
+        }
+
+        if (left == 2 || right == 2) {
+            return 1;
+        }
+
+        return 0;
     }
 }
 
 ```
-
